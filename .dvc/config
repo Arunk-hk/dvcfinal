@@ -1,0 +1,4 @@
+[core]
+    remote = remote_storage
+['remote "remote_storage"']
+    url = D:\DataML\MLOPS\Full\remote_adult_data

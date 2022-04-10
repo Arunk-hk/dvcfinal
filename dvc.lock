@@ -1,0 +1,78 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py data/adult.csv
+    deps:
+    - path: data/adult.csv
+      md5: 2e37fb9b8d375d82c7d424e934e0f074
+      size: 5326368
+    - path: src/prepare.py
+      md5: e7b41d6e056b007513649e0c22264527
+      size: 1184
+    params:
+      params.yaml:
+        prepare.split: 0.5
+  featurize:
+    cmd: python src/featurize.py data
+    deps:
+    - path: data
+      md5: 511898d1a21d02d5c83397e32d0181f4.dir
+      size: 7313714
+      nfiles: 3
+    - path: src/featurize.py
+      md5: a0c9fcee3d76f6a6956a81cd5ab77fd8
+      size: 381
+    params:
+      params.yaml:
+        featurize.featurelist:
+        - age
+        - workclass
+        - fnlwgt
+        - education
+        - educational-num
+        - marital-status
+        - occupation
+        - relationship
+        - race
+        - gender
+        - capital-gain
+        - capital-loss
+        - hours-per-week
+        - native-country
+        - income
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data
+      md5: 511898d1a21d02d5c83397e32d0181f4.dir
+      size: 7313714
+      nfiles: 3
+    - path: src/train.py
+      md5: 260d3e6980aa197a017d8d68b8f55a0f
+      size: 1940
+    params:
+      params.yaml:
+        train.n_estimators: 10
+  evaluate:
+    cmd: python src/evaluate.py adult_model.pkl data scores.json prc.json roc.json
+    deps:
+    - path: adult_model.pkl
+      md5: fcdf61ea51183d573cbd4dc5d51ab7a5
+      size: 3002751
+    - path: data
+      md5: a6c6b340bb94a3eda76522a6d19713ea.dir
+      size: 6519490
+      nfiles: 3
+    - path: src/evaluate.py
+      md5: 8e0b98433df79723c9f18dff835f1f39
+      size: 1898
+    outs:
+    - path: prc.json
+      md5: 793a2ef2bc04146a9806347e40ffc88f
+      size: 1242
+    - path: roc.json
+      md5: 9eb7fb52b6141fb60348f555ec38be78
+      size: 1500
+    - path: scores.json
+      md5: 28c5c1f019909af2f41725beeb0e93d5
+      size: 76

@@ -1,5 +1,5 @@
 prepare:
-  split: 0.30
+  split: 0.50
 
 featurize:
   featurelist: ['age', 'workclass', 'fnlwgt', 'education', 'educational-num',
